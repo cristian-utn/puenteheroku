@@ -1,0 +1,19 @@
+@charset "utf-8";
+.espacio{
+    height: 80px;
+    background-color: black;
+    box-sizing: content-box;
+    border-collapse: separate;
+    text-decoration: none;
+}
+.contenedor{
+    display: flex;
+}
+.boton1{
+    color: white;
+    background-color: black;
+    font-style: normal;
+    margin-top: 10px;
+    padding: 20px;
+    font-size: 20px;
+}
