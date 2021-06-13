@@ -14,8 +14,8 @@ app.get('/', function (req, res) {
     res.render('pages/index', {
         client_id: '8513290730145598',
         secret_key: 'MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu',
-        // redirect_uri: 'https://node-predeterminado-ml.herokuapp.com',
-        redirect_uri: 'http://localhost:5000',
+        redirect_uri: 'https://node-predeterminado-ml.herokuapp.com',
+        // redirect_uri: 'http://localhost:5000',
         site_id: config.site_id,
         appname: req.subdomains
     });
