@@ -1,6 +1,5 @@
 // const { response } = require("express");
 
-const { json } = require("express");
 
 console.log('active');
 var id='8513290730145598';
@@ -23,14 +22,13 @@ if(recibi_link.indexOf('code')!=-1){
     fetch('',{
         method:'POST',
         headers:{
-            'accept': 'application/json'
-            'content-type':'application/x-www-form-urlencoded',
+            'accept': 'application/json',
+            'content-type':'application/x-www-form-urlencoded'
         },
         // https://api.mercadolibre.com/oauth/token:'https://api.mercadolibre.com/oauth/token',
         body:JSON.stringify({
-            nombre:'cris',
-            grant_type:authorization_code,
-            client_id:id,
+            grant_type: 'authorization_code',
+            client_id: id,
             client_secret: key_secreto,
             code: code_sacado,
             redirect_url: hosting
