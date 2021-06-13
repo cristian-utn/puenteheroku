@@ -13,5 +13,7 @@ function autentica(){
     window.location=direccion1;
 }
 
-// console.log();
+console.log(window.location);
+var prodId = getParameterByName('code');
+console.log(prodId);
 // fetch('http://localhost:5000/assets/texto.txt').then(console.log(response));
