@@ -31,7 +31,7 @@ if(recibi_link.indexOf('code')!=-1){
             client_id: id,
             client_secret: key_secreto,
             code: code_sacado,
-            redirect_url: hosting
+            redirect_uri: hosting
         })
     }).then(console.log(response=>{
         return response.json()
