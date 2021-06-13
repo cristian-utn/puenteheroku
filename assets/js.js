@@ -19,7 +19,7 @@ if(recibi_link.indexOf('code')!=-1){
     console.log('Si encontre');
     console.log(recibi_link.slice(recibi_link.indexOf('code')+5));
     var code_sacado=recibi_link.slice(recibi_link.indexOf('code')+5);
-    fetch('',{
+    fetch('https://api.mercadolibre.com/oauth/token',{
         method:'POST',
         headers:{
             'accept': 'application/json',
