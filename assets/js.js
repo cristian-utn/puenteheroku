@@ -33,9 +33,11 @@ if(recibi_link.indexOf('code')!=-1){
             code: code_sacado,
             redirect_uri: hosting
         })
-    }).then(console.log(response=>{
-        return response.json()
-    }));
+    })
+    .then( response=>response.json())
+    .then( acces_token => {
+        console.log(acces_token);
+    })
     // curl -X POST -H 'accept: application/json' -H 'content-type: application/x-www-form-urlencoded' 'https://api.mercadolibre.com/oauth/token' -d 'grant_type=authorization_code' -d 'client_id=$APP_ID' -d 'client_secret=$SECRET_KEY' -d 'code=$SERVER_GENERATED_AUTHORIZATION_CODE' -d 'redirect_uri=$REDIRECT_URI'
 
     // console.log(window.location.search.split('code=')[window.location.search.split('code=').length-1]);
