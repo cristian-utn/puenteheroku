@@ -94,10 +94,10 @@ function pedirkeyorefresh(){
         console.log(datos);
         accesstoken=datos.access_token;
         refreshtoken=refresh_token;
-        probar();
+        enviar2datos(accesstoken,refreshtoken);
     })
 }
-function probar(acces,refres){
+function enviar2datos(acces,refres){
     // console.log(data);
     fetch('/enviotoken',{
         method:'POST',
