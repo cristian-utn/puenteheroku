@@ -50,7 +50,7 @@ function pidodatosdeservidor(){
         // document.getElementById('info').innerHTML=Object.values(xdato)+'<p>'+xdato.code+'</p>';
     });
 }
-pidodatosdeservidor();
+pidodatosdeservidor(); // pido code
 function enviar2datos(acces,refres){
     // console.log(data);
     fetch('/enviotoken',{
@@ -62,19 +62,13 @@ function enviar2datos(acces,refres){
             }) // convertimos
         }
         // body:data // convertimos
-    })
-    .then(function(response) {
-        if(response.ok) {
-            return response.text();
-        } else {
-            throw "Error en la llamada Ajax";
-        }
-     });
+    });
     // .finally(console.log('enviado'));
     // .then( response=>response.json())
 }
 function pedirkeyorefresh(){
     console.log('el code que usare para pedir key es');
+    console.log('el code actual');
     console.log(code);
     fetch('https://api.mercadolibre.com/oauth/token',{
         method:'POST',
@@ -96,7 +90,12 @@ function pedirkeyorefresh(){
         console.log(datos);
         accesstoken=datos.access_token;
         refreshtoken=datos.refresh_token;
+        
+        console.log('el actual access_token');
+        console.log(datos.access_token);
+        console.log('el ACTUAL refresh_token');
         console.log(datos.refresh_token);
+
         document.getElementById('pidekeyrefresh').disabled = false;
         enviar2datos(datos.access_token,datos.refresh_token);
     });
@@ -106,8 +105,8 @@ function vertodo(){
     fetch('/info')
     .then(response=>response.json())
     .then(data=>{
-        for(var i=0;i>Object.keys(data).length;i++){
-            document.getElementById('infotodo').innerText+='<p>'+Object.keys(data)[i]+'='+Object.values(data)+'</p>';
+        for(var i=0;i<Object.keys(data).length;i++){
+            document.getElementById('infotodo').innerText+='<p>'+Object.keys(data)[i]+'='+Object.values(data)[i]+'</p>';
         }
     });
 }
