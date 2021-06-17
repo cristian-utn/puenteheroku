@@ -106,7 +106,7 @@ function vertodo(){
     .then(response=>response.json())
     .then(data=>{
         for(var i=0;i<Object.keys(data).length;i++){
-            document.getElementById('infotodo').innerText+='<p>'+Object.keys(data)[i]+'='+Object.values(data)[i]+'</p>';
+            document.getElementById('infotodo').innerHTML+='<p>'+Object.keys(data)[i]+'='+Object.values(data)[i]+'</p>';
         }
     });
 }
