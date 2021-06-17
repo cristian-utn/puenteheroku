@@ -38,9 +38,9 @@ app.get('/envio/:x', function (req, res) {
 
 app.get('/recibocod:?', function (req, res) {
     console.log(req.query);
-    code_que_reciba_si_lo_tiene_la_url_de_mi_pagina=req.query;
+    code_que_reciba_si_lo_tiene_la_url_de_mi_pagina=req.query.code;
     // res.redirect(localhost);
-    res.redirect(hosting);
+    res.redirect(url_hosting);
 });
 app.get('/pidoinfo', function (req, res) {
     res.send(code_que_reciba_si_lo_tiene_la_url_de_mi_pagina);
@@ -53,7 +53,7 @@ app.post('/enviotoken', function (req, res) {
 });
 app.get('/info', function (req, res) {
     res.send({
-        code:code,
+        code:code_que_reciba_si_lo_tiene_la_url_de_mi_pagina,
         accestoken:access_token_que_reciba_por_fetch,
         refreshtoken:refresh_token_que_reciba_por_fetch
     });

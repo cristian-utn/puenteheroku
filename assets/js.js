@@ -19,8 +19,8 @@ if(recibi_link.indexOf('code')!=-1){
     console.log('Si encontre');
     console.log(recibi_link.slice(recibi_link.indexOf('code')+5));
     var code_sacado=recibi_link.slice(recibi_link.indexOf('code')+5);
-    // window.location=localhost+'/recibo'+recibi_link;                    // En LOCAL HOST
-    window.location=hosting+'/recibocod'+recibi_link;                   // EN HOSTING
+    window.location=localhost+'/recibo'+recibi_link;                    // En LOCAL HOST
+    // window.location=hosting+'/recibocod'+recibi_link;                   // EN HOSTING
     // curl -X POST -H 'accept: application/json' -H 'content-type: application/x-www-form-urlencoded' 'https://api.mercadolibre.com/oauth/token' -d 'grant_type=authorization_code' -d 'client_id=$APP_ID' -d 'client_secret=$SECRET_KEY' -d 'code=$SERVER_GENERATED_AUTHORIZATION_CODE' -d 'redirect_uri=$REDIRECT_URI'
 
     // console.log(window.location.search.split('code=')[window.location.search.split('code=').length-1]);
