@@ -1,6 +1,7 @@
 // const { response } = require("express");
-console.log('active');
-var id='8513290730145598';
+var fecha = new Date();
+
+const id='8513290730145598';
 var localhost='http://localhost:5000'
 var hosting='https://node-predeterminado-ml.herokuapp.com';
 var direccion1='http://auth.mercadolibre.com.ar/authorization?response_type=code&client_id='+id+'&redirect_uri='+hosting;
@@ -67,7 +68,7 @@ function enviar2datos(acces,refres){
     // .then( response=>response.json())
 }
 function pedirkeyorefresh(){
-    console.log('el code que usare para pedir key es');
+    console.log('el code que usare para pedir key es:');
     console.log('el code actual');
     console.log(code);
     fetch('https://api.mercadolibre.com/oauth/token',{
@@ -106,10 +107,61 @@ function vertodo(){
     .then(response=>response.json())
     .then(data=>{
         for(var i=0;i<Object.keys(data).length;i++){
+            document.getElementById('infotodo').innerHTML='';
             document.getElementById('infotodo').innerHTML+='<p>'+Object.keys(data)[i]+'='+Object.values(data)[i]+'</p>';
         }
     });
 }
+//
+function pedirRefreshToken(){
+    console.log('BOTON pide Key refresh');
+    console.log('el code actual');
+    console.log(code);
+    fetch('https://api.mercadolibre.com/oauth/token',{
+        method:'POST',
+        headers:{
+            'accept': 'application/json',
+            'content-type':'application/x-www-form-urlencoded'
+        },
+        // https://api.mercadolibre.com/oauth/token:'https://api.mercadolibre.com/oauth/token',
+        body:JSON.stringify({
+            grant_type: 'refresh_token',
+            client_id: id,
+            client_secret: key_secreto,
+            refresh_token: refreshtoken,
+        })
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+        accesstoken=datos.access_token;
+        refreshtoken=datos.refresh_token;
+        console.log('el actual access_token');
+        console.log(datos.access_token);
+        document.getElementById('infonuevotoken').innerHTML='<p>'+datos.access_token+'</p>';
+        console.log('el ACTUAL refresh_token');
+        console.log(datos.refresh_token);
+        document.getElementById('infonuevotoken').innerHTML+='<p>'+datos.refresh_token+'</p>';
+        document.getElementById('pidekeyrefresh').disabled = false;
+        enviar2datos(datos.access_token,datos.refresh_token);
+    });
+    console.log('boton pide Key refresh');
+    fecha = new Date();
+    fecha.setHours(fecha.getHours()+6);
+    alert('su token expira a las '+fecha.getHours()+' y '+fecha.getMinutes()+'pero se renueva automaticamente');
+    setTimeout(function(){
+        alert('tengo ganas de actualizar el token ');
+    }, 5000);
+    setTimeout(function(){
+        pedirRefreshToken();
+    }, 21000000);
+}
+
+
+
+
+
+
 
 
 
@@ -146,3 +198,20 @@ formu.addEventListener('submit',function(e){
     })
 });
 // fetch('http://localhost:5000/assets/texto.txt').then(console.log(response));
+const modal= document.querySelector('.logo');
+function activa(){
+    var ancho = window.innerWidth;
+    if (modal.classList.contains('movelogo')){
+        modal.classList.remove('movelogo');
+        modal.style.left='0px';
+    }
+    else{
+        modal.classList.add('movelogo');
+        ancho=ancho-208;
+        modal.style.left=ancho+'px';
+    }
+    setTimeout(function(){
+        activa();
+    }, 3000);
+}
+activa();

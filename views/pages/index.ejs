@@ -19,12 +19,13 @@
         <button class="boton1" onclick="autentica();">pide code</button>
         <!-- <button class="boton1" id="pidecode" onclick="iniciar();" disabled>pide key</button> -->
         <button class="boton1" id="pidekey" onclick="pedirkeyorefresh();" disabled>pide key</button>
-        <button class="boton1" id="pidekeyrefresh" onclick="alert('falta desarrollar');" disabled>pide key refresh</button>
+        <button class="boton1" id="pidekeyrefresh" onclick="pedirRefreshToken();" disabled>pide key refresh</button>
         <button class="boton1" onclick="pidodatosdeservidor();">recupero_datos</button>
         <button class="boton1" onclick="vertodo();">ver todo</button>
     </div>
     <div class="contenedor"><p id="info"></p></div>
     <div class="contenedor"><p id="infotodo"></p></div>
+    <div class="contenedor"><p id="infonuevotoken"></p></div>
     <form id="fo" action="/recibo" method="GET">
         <input type="text" id="campo1" name="te" placeholder="pon tu nombre">
         <input type="text" id="campo1" name="tilaro" placeholder="pon tu nombre">
