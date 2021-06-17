@@ -23,6 +23,7 @@
 .boton1:disabled,
 .boton1[disabled]{
     background-color: gray;
+    cursor: initial;
 }
 p{
     background-color: aqua;
