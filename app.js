@@ -53,7 +53,7 @@ app.post('/enviotoken', function (req, res) {
 });
 app.get('/info', function (req, res) {
     res.send({
-        code:code_que_reciba_si_lo_tiene_la_url_de_mi_pagina,
+        code:code_que_reciba_si_lo_tiene_la_url_de_mi_pagina.code,
         accestoken:access_token_que_reciba_por_fetch,
         refreshtoken:refresh_token_que_reciba_por_fetch
     });

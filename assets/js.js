@@ -51,6 +51,28 @@ function pidodatosdeservidor(){
     });
 }
 pidodatosdeservidor();
+function enviar2datos(acces,refres){
+    // console.log(data);
+    fetch('/enviotoken',{
+        method:'POST',
+        headers: { // cabeceras HTTP
+            body: JSON.stringify({
+                access_token:acces,
+                refresh_token:refres
+            }) // convertimos
+        }
+        // body:data // convertimos
+    })
+    .then(function(response) {
+        if(response.ok) {
+            return response.text();
+        } else {
+            throw "Error en la llamada Ajax";
+        }
+     });
+    // .finally(console.log('enviado'));
+    // .then( response=>response.json())
+}
 function pedirkeyorefresh(){
     console.log('el code que usare para pedir key es');
     console.log(code);
@@ -73,33 +95,13 @@ function pedirkeyorefresh(){
     .then( datos => {
         console.log(datos);
         accesstoken=datos.access_token;
-        refreshtoken=refresh_token;
+        refreshtoken=datos.refresh_token;
+        console.log(datos.refresh_token);
         document.getElementById('pidekeyrefresh').disabled = false;
-        enviar2datos(accesstoken,refreshtoken);
-    })
+        enviar2datos(datos.access_token,datos.refresh_token);
+    });
 }
-function enviar2datos(acces,refres){
-    // console.log(data);
-    fetch('/enviotoken',{
-        method:'POST',
-        headers: { // cabeceras HTTP
-            body: JSON.stringify({
-                access_token:acces,
-                refresh_token:refres
-            }) // convertimos
-        }
-        // body:data // convertimos
-    })
-    .then(function(response) {
-        if(response.ok) {
-            return response.text()
-        } else {
-            throw "Error en la llamada Ajax";
-        }
-     });
-    // .finally(console.log('enviado'));
-    // .then( response=>response.json())
-}
+
 function vertodo(){
     fetch('/info').then(response=>response.json()).then(data=>{
         for(var i=0;i>Object.keys(data).length;i++){
