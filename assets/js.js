@@ -94,6 +94,7 @@ function pedirkeyorefresh(){
         console.log(datos);
         accesstoken=datos.access_token;
         refreshtoken=refresh_token;
+        document.getElementById('pidekeyrefresh').disabled = false;
         enviar2datos(accesstoken,refreshtoken);
     })
 }
