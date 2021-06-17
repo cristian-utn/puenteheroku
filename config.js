@@ -16,7 +16,7 @@ var config = {
 	client_id :  process.env.App_ID,
 	secret_key : process.env.Secret_Key,
 	redirect_uri : process.env.Redirect_URI,
-	site_id : 'MLA'
+	site_id : 'MLAdeconfig'
 };
 
 exports.config = config;

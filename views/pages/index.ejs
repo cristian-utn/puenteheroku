@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="es-ar" class="no-js">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Official NodeJs SDK for Mercado Libre's API.">
+    <meta name="description" content="gestor mercado libre de Cristian Aspi">
     <meta name="keywords" content="API, NodeJs, Mercado Libre, SDK, meli, integration, e-commerce">
-    <title>Mercado Libre NodeJs SDK</title>
+    <title>Gestor de productos de Cristian Aspi</title>
+    <link rel="icon" href="favicon.png" type="img/png">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <header class="navbar">
-        <a class="logo" href="#"><img src="logo-developers.png" alt=""></a>
-        <nav>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a target="_blank" href="http://developers.mercadolibre.com/getting-started/">Getting Started</a></li>
-                <li><a target="_blank" href="http://developers.mercadolibre.com/api-docs/">API Docs</a></li>
-                <li><a target="_blank" href="http://developers.mercadolibre.com/community/">Community</a></li>
-            </ul>
-        </nav>
-    </header>
+    <a class="logo" href="#"><img src="logo-developers.png" alt=""></a>
     <div class="espacio"></div>
     <div class="contenedor">
-
-        <button class="boton1" onclick="autentica()">activare algo</button>
+        <button class="boton1" onclick="autentica();">pide code</button>
+        <!-- <button class="boton1" id="pidecode" onclick="iniciar();" disabled>pide key</button> -->
+        <button class="boton1" id="pidekey" onclick="pedirkeyorefresh();" disabled>pide key</button>
+        <button class="boton1" id="pidekeyrefresh" onclick="iniciar();" disabled>pide key refresh</button>
+        <button class="boton1" onclick="pidodatosdeservidor();">recupero_datos</button>
+        <button class="boton1" onclick="vertodo();">ver todo</button>
     </div>
+    <div class="contenedor"><p id="info"></p></div>
+    <div class="contenedor"><p id="infotodo"></p></div>
+    <form id="fo" action="/recibo" method="GET">
+        <input type="text" id="campo1" name="te" placeholder="pon tu nombre">
+        <input type="text" id="campo1" name="tilaro" placeholder="pon tu nombre">
+        <!-- <input type="button" onclick="enviar()" value="enviar datos"> -->
+        <button class="boton1" type="submit">recibo_form</button>
+        <!-- <input type="submit" value="envia algo"> -->
+    </form>
     <div class="header">
         <div>
             <h1>Getting Started with Mercado Libre's NodeJs SDK</h1>

@@ -13,7 +13,20 @@
     color: white;
     background-color: black;
     font-style: normal;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 20px;
     font-size: 20px;
+}
+.boton1:hover{
+    background-color: green;
+}
+.boton1:disabled,
+.boton1[disabled]{
+    background-color: gray;
+}
+p{
+    background-color: aqua;
+    padding: 20px;
+    /* height: 20px; */
+    margin: 0;
 }

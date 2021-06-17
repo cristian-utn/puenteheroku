@@ -143,8 +143,11 @@ p {
 }
 
 .logo {
-    float: left;
-    margin-top: 20px;
+    /* float: left; */
+    /* margin-top: 20px; */
+    display: inline-block;
+    padding: 20px;
+    background-color: red;
 }
 
 .btn {
