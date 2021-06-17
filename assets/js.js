@@ -40,7 +40,7 @@ function pidodatosdeservidor(){
             document.getElementById('info').innerHTML='no hay datos';
         }
         else if(Object.values(xdato)[0].indexOf('TG')!=-1){ // PROVISORIO REEMPLAZAR POR BUSCADOR DE KEYS WHIT GET o HASH DENTRO DE UN JSON QUE ABARQUE TODOS LOS DATOS
-            document.getElementById('info').innerHTML=Object.values(xdato)+'<p>'+'existe TG dentro'+'</p>';
+            document.getElementById('info').innerHTML=Object.values(xdato)[0]+'<p>'+'existe TG dentro'+'</p>';
             document.getElementById('pidekey').disabled = false;
             console.log('borra disabled');
             code=Object.values(xdato)[0];
@@ -103,9 +103,11 @@ function pedirkeyorefresh(){
 }
 
 function vertodo(){
-    fetch('/info').then(response=>response.json()).then(data=>{
+    fetch('/info')
+    .then(response=>response.json())
+    .then(data=>{
         for(var i=0;i>Object.keys(data).length;i++){
-            document.getElementById('todoinfo').innerText='<p>'+Object.keys(data)[i]+'='+Object.values(data)+'</p>';
+            document.getElementById('infotodo').innerText+='<p>'+Object.keys(data)[i]+'='+Object.values(data)+'</p>';
         }
     });
 }
