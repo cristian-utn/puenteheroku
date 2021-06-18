@@ -279,7 +279,6 @@ function buscaycambia(){
     var largo;
     var encontrado;
     var listaids=[];//ahora comparar cuando los tenga
-    var listadetalles=[];
     fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
         method:'GET',
         headers:{
@@ -311,7 +310,6 @@ function buscaycambia(){
         }
     })
     .then(dato=>{
-        // console.log(listaids); // lista de ids
         console.log(listaids.length);
         for(var i=0;i<listaids.length;i++){
             fetch('https://api.mercadolibre.com/items/'+listaids[i],{
@@ -323,30 +321,37 @@ function buscaycambia(){
             })
             .then( response=>response.json())
             .then( datos => {
-                console.log(datos)
-            });
-
-
-            fetch('https://api.mercadolibre.com/items/'+itempublicado,{
-                method:'GET',
-                headers:{
-                    'Authorization': 'Bearer '+accesstoken,
-                    'content-type':'application/x-www-form-urlencoded'
+                var propiedad=datos.attributes;
+                // console.log(propiedad);
+                for(var j=0;j<propiedad.length;j++){
+                    // console.log(propiedad[j]);
+                    if(propiedad[j].value_name==ISBM){
+                        // console.log('posicion i');
+                        // console.log(i);
+                        // console.log('posicion j');
+                        // console.log(j);
+                        // console.log(datos.id);
+                            fetch('https://api.mercadolibre.com/items/'+datos.id,{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+                                    method:'PUT',
+                                    headers:{
+                                        'Authorization': 'Bearer '+accesstoken,
+                                        'accept': 'application/json',
+                                        'content-type':'application/json'
+                                    },
+                                    body:JSON.stringify({
+                                        price: nuevoprecio,
+                                        available_quantity:nuevostock
+                                    })
+                                })
+                                .then( response=>response.json())
+                                .then( datos => {
+                                    console.log(datos);
+                                });
+                    }
                 }
-            })
-            .then( response=>response.json())
-            .then( datos => {
-                console.log(datos);
             });
         }
-        
-    }).then(dato2=>{
-        // console.log(dato2);
-        for(var j=0;j<listaids.length;j++){
-            console.log(listaids[j]);
-            console.log(listadetalles[j]);
-        }
-    });
+    })
         //     console.log(listatributos[i]);
         //     for(var j=0;j<listatributos[i].length;j++){
         //         console.log(listatributos[i][j]);
