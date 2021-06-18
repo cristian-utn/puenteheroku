@@ -5,6 +5,7 @@
     box-sizing: content-box;
     border-collapse: separate;
     text-decoration: none;
+    position: relative;
 }
 .contenedor{
     display: flex;
@@ -16,6 +17,7 @@
     /* margin-top: 10px; */
     padding: 20px;
     font-size: 20px;
+    border-radius: 10px;
 }
 .boton1:hover{
     background-color: green;
@@ -28,6 +30,33 @@
 p{
     background-color: aqua;
     padding: 20px;
+    border: 2px solid black;
     /* height: 20px; */
     margin: 0;
+}
+#publicaciones{
+    display: flex;
+    flex-wrap: wrap;
+}
+.publicacion{
+    border: 2px solid red;
+    display: inline-block;
+}
+.publicacion p{
+    padding: 5px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+}
+.publicacion img{
+    width: 300px;
+    display: block;
+    display: inline-block;
+
+}
+.publicacion .detail{
+    width: 400px;
+    display: block;
+    /* display: inline-block; */
+
 }

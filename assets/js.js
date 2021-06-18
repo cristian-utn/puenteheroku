@@ -1,6 +1,7 @@
 // const { response } = require("express");
-console.log('active');
-var id='8513290730145598';
+var fecha = new Date();
+
+const id='8513290730145598';
 var localhost='http://localhost:5000'
 var hosting='https://node-predeterminado-ml.herokuapp.com';
 var direccion1='http://auth.mercadolibre.com.ar/authorization?response_type=code&client_id='+id+'&redirect_uri='+hosting;
@@ -40,7 +41,7 @@ function pidodatosdeservidor(){
             document.getElementById('info').innerHTML='no hay datos';
         }
         else if(Object.values(xdato)[0].indexOf('TG')!=-1){ // PROVISORIO REEMPLAZAR POR BUSCADOR DE KEYS WHIT GET o HASH DENTRO DE UN JSON QUE ABARQUE TODOS LOS DATOS
-            document.getElementById('info').innerHTML=Object.values(xdato)[0]+'<p>'+'existe TG dentro'+'</p>';
+            document.getElementById('info').innerHTML=Object.values(xdato)[0]+'<br>existe TG dentro';
             document.getElementById('pidekey').disabled = false;
             console.log('borra disabled');
             code=Object.values(xdato)[0];
@@ -50,7 +51,7 @@ function pidodatosdeservidor(){
         // document.getElementById('info').innerHTML=Object.values(xdato)+'<p>'+xdato.code+'</p>';
     });
 }
-pidodatosdeservidor();
+pidodatosdeservidor(); // pido code
 function enviar2datos(acces,refres){
     // console.log(data);
     fetch('/enviotoken',{
@@ -62,19 +63,13 @@ function enviar2datos(acces,refres){
             }) // convertimos
         }
         // body:data // convertimos
-    })
-    .then(function(response) {
-        if(response.ok) {
-            return response.text();
-        } else {
-            throw "Error en la llamada Ajax";
-        }
-     });
+    });
     // .finally(console.log('enviado'));
     // .then( response=>response.json())
 }
 function pedirkeyorefresh(){
-    console.log('el code que usare para pedir key es');
+    console.log('el code que usare para pedir key es:');
+    console.log('el code actual');
     console.log(code);
     fetch('https://api.mercadolibre.com/oauth/token',{
         method:'POST',
@@ -96,7 +91,12 @@ function pedirkeyorefresh(){
         console.log(datos);
         accesstoken=datos.access_token;
         refreshtoken=datos.refresh_token;
+        
+        console.log('el actual access_token');
+        console.log(datos.access_token);
+        console.log('el ACTUAL refresh_token');
         console.log(datos.refresh_token);
+
         document.getElementById('pidekeyrefresh').disabled = false;
         enviar2datos(datos.access_token,datos.refresh_token);
     });
@@ -106,16 +106,319 @@ function vertodo(){
     fetch('/info')
     .then(response=>response.json())
     .then(data=>{
-        for(var i=0;i>Object.keys(data).length;i++){
-            document.getElementById('infotodo').innerText+='<p>'+Object.keys(data)[i]+'='+Object.values(data)+'</p>';
+        for(var i=0;i<Object.keys(data).length;i++){
+            document.getElementById('infotodo').innerHTML='';
+            document.getElementById('infotodo').innerHTML+='<p>'+Object.keys(data)[i]+'='+Object.values(data)[i]+'</p>';
+        }
+    });
+}
+//
+function pedirRefreshToken(){
+    console.log('BOTON pide Key refresh');
+    console.log('el code actual');
+    console.log(code);
+    fetch('https://api.mercadolibre.com/oauth/token',{
+        method:'POST',
+        headers:{
+            'accept': 'application/json',
+            'content-type':'application/x-www-form-urlencoded'
+        },
+        // https://api.mercadolibre.com/oauth/token:'https://api.mercadolibre.com/oauth/token',
+        body:JSON.stringify({
+            grant_type: 'refresh_token',
+            client_id: id,
+            client_secret: key_secreto,
+            refresh_token: refreshtoken,
+        })
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+        accesstoken=datos.access_token;
+        refreshtoken=datos.refresh_token;
+        console.log('el actual access_token');
+        console.log(datos.access_token);
+        document.getElementById('infonuevotoken').innerHTML='<p>'+datos.access_token+'</p>';
+        console.log('el ACTUAL refresh_token');
+        console.log(datos.refresh_token);
+        document.getElementById('infonuevotoken').innerHTML+='<p>'+datos.refresh_token+'</p>';
+        document.getElementById('pidekeyrefresh').disabled = false;
+        enviar2datos(datos.access_token,datos.refresh_token);
+    });
+    console.log('boton pide Key refresh');
+    fecha = new Date();
+    fecha.setHours(fecha.getHours()+6);
+    alert('su token expira a las '+fecha.getHours()+' y '+fecha.getMinutes()+'pero se renueva automaticamente');
+    setTimeout(function(){
+        alert('tengo ganas de actualizar el token ');
+    }, 5000);
+    setTimeout(function(){
+        pedirRefreshToken();
+    }, 21000000);
+}
+//////////////////////////
+// const id='8513290730145598';
+// const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
+accesstoken='APP_USR-8513290730145598-061812-228f79214d5d783304655fc6e9f81501-244140036';
+refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
+
+// itempublicado='MLA860038719';
+// "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
+
+// var itempublicado='MLA750852053'; //libro ajeno
+var itempublicado='MLA926148119'; //item auxiliar
+function publicar1(){
+    fetch('https://api.mercadolibre.com/items',{
+        method:'POST',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        },
+        // https://api.mercadolibre.com/oauth/token:'https://api.mercadolibre.com/oauth/token',
+        body:JSON.stringify(
+            {
+                title:"ejercicio libro 4 Item de test - No Ofertar",
+                category_id:"MLA412445",
+                price:350,
+                currency_id:"ARS",
+                available_quantity:10,
+                buying_mode:"buy_it_now",
+                condition:"new",
+                listing_type_id:"gold_special",
+                description:{
+                    plain_text:"Descripción con Texto Plano "
+                },
+                video_id:"https://www.youtube.com/watch?v=uG4Sixk2srw&list=PL2Z95CSZ1N4HM7gzW8gK1Jt3lGWQO0k_G",
+                sale_terms:[
+                   {
+                    id:"WARRANTY_TYPE",
+                    value_name:"Garantía del vendedor"
+                   },
+                   {
+                    id:"WARRANTY_TIME",
+                    value_name:"90 días"
+                   }
+                ],
+                pictures:[
+                   {
+                    source:"http://mla-s2-p.mlstatic.com/968521-MLA20805195516_072016-O.jpg"
+                   }
+                ],
+                attributes:[
+                    {
+                        id: "AUTHOR",
+                        value_name: "String"
+                        },
+                        {
+                        id: "BOOK_TITLE",
+                        value_name: "String"
+                        },
+                        {
+                        id: "FORMAT",
+                        value_name: "Papelmojado"
+                        },
+                        {
+                        id: "ISBN",
+                        // value_name: "9789507880223" // SOLO ACEPTA NUMEROS PERO EN STRING
+                        value_name: "9789875665613" // SOLO ACEPTA NUMEROS PERO EN STRING
+                        },
+                        {
+                        id: "NARRATION_TYPE",
+                        value_name: "String"
+                        }                           
+                ]
+            }
+        )
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+function actualizar(){
+fetch('https://api.mercadolibre.com/items/'+itempublicado,{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+        method:'PUT',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+            'accept': 'application/json',
+            'content-type':'application/json'
+        },
+        body:JSON.stringify({
+            price: 900,
+            available_quantity:3,
+            sale_terms:[
+                {
+                 id:"WARRANTY_TYPE",
+                 value_name:"Garantía del vendedor"
+                },
+                {
+                 id:"WARRANTY_TIME",
+                 value_name:"90 días"
+                },
+                {
+                    id:"MANUFACTURING_TIME",
+                    value_name:"3 días"
+                }
+             ]
+            // MANUFACTURING_TIME:'3'
+            // hierarchy:3
+        })
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+function buscaycambia(){
+    var seller_id=244140036 //lo saque de una publicacion
+    // 9789875665613
+    var pais_mercadolibre='MLA';
+    var ISBM=document.getElementById('campoisbm').value;
+    var nuevostock=document.getElementById('campostock').value;
+    var nuevoprecio=document.getElementById('campoprecio').value;
+    // fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?site_id=MLA'+'&q=9789875665613',{
+    var largo;
+    var encontrado;
+    fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos.results);///////////////////////////
+        largo=datos.results;
+        // var lista=Object.keys(datos.result)
+        document.getElementById('titulopublicaciones').innerHTML='Publicaciones: '+largo.length;
+        document.getElementById('publicaciones').innerHTML='';
+        for(var i=0;i<largo.length;i++){
+            console.log('reviso item: '+i);
+            fetch('https://api.mercadolibre.com/items/'+largo[i].id,{
+                method:'GET',
+                headers:{
+                    'Authorization': 'Bearer '+accesstoken,
+                    'content-type':'application/x-www-form-urlencoded'
+                }
+            })
+            .then( response=>response.json())
+            .then( dato => {
+                var larg=dato.attributes;
+                for(var j=0;j<larg.length;j++){
+                    // console.log(larg[j]);
+                    var permito=false;
+                    if('id' in larg[j]){
+                        if('GTIN' == larg[j].id)
+                        if('value_name' in larg[j] && larg[j].value_name == ISBM)
+                        encontrado=largo[i].id;
+                        permito=true;
+
+                    }
+                    else if('ISBM' in larg[j])
+                    if('value_name' in larg[j] && larg[j].value_name == ISBM)
+                        encontrado=largo[i].id;
+                        permito=true;        
+                    if(permito){
+                        console.log('DESCUBIERTO');
+                        console.log(encontrado)
+                        fetch('https://api.mercadolibre.com/items/'+encontrado,{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+                            method:'PUT',
+                            headers:{
+                                'Authorization': 'Bearer '+accesstoken,
+                                'accept': 'application/json',
+                                'content-type':'application/json'
+                            },
+                            body:JSON.stringify({
+                                price: nuevoprecio,
+                                available_quantity:nuevostock//  SE PUEDE AGREGAR CAMBIO LAPSO DE DIAS QUE TARDARA
+                            })
+                        });
+                    }
+                }
+            });
+            document.getElementById('publicaciones').innerHTML+=`
+            <div class="publicacion">
+            <div class="detail">
+            <p>titulo: <strong>${datos.results[i].id}</strong></p>
+            <p>titulo: <strong>${datos.results[i].title}</strong></p>
+            <p>precio: <strong>${datos.results[i].price}</strong></p>
+            <p>stock: <strong>${datos.results[i].available_quantity}</strong></p>
+            <p>foto: <strong>${datos.results[i].thumbnail}</strong></p>
+            </div>
+            <img src="${datos.results[i].thumbnail}" alt="no se encontro o hay mas de 1">
+            </div>
+            `;
+        }
+    });
+}
+function listar(){
+    // https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
+    // https://api.mercadolibre.com//items?ids=$ITEM_ID1,$ITEM_ID2&attributes=$ATTRIBUTE1,$ATTRIBUTE2,$ATTRIBUTE3
+    var seller_id=244140036 //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);///////////////////////////
+        // var lista=Object.keys(datos.result)
+        document.getElementById('titulopublicaciones').innerHTML='Publicaciones: '+datos.results.length;
+        document.getElementById('publicaciones').innerHTML='';
+        for(var i=0;i<datos.results.length;i++){
+            document.getElementById('publicaciones').innerHTML+=`
+            <div class="publicacion">
+            <div class="detail">
+            <p>titulo: <strong>${datos.results[i].title}</strong></p>
+            <p>precio: <strong>${datos.results[i].price}</strong></p>
+            <p>stock: <strong>${datos.results[i].available_quantity}</strong></p>
+            <p>foto: <strong>${datos.results[i].thumbnail}</strong></p>
+            </div>
+            <img src="${datos.results[i].thumbnail}" alt="no se encontro o hay mas de 1">
+            </div>
+            `;
         }
     });
 }
 
+function mostrar_1_producto(){//segun ML
+    itempublicado='MLA926158965';
+    fetch('https://api.mercadolibre.com/items/'+itempublicado,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+            'content-type':'application/x-www-form-urlencoded'
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+//hierarchy
+function activar_stock_espera(){//segun ML
+    fetch('https://api.mercadolibre.com/categories/'+"MLA412445"+'/sale_terms',{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+}
 
-
-
-
+////////////////////// apartado PARA INDAGAR mas sobre busquedas
+    // https://api.mercadolibre.com/sites/MLA/search?seller_id=244140036&ISBM=9789875665613
+    // fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id+'&ISBM='+ISBM,{
+        // https://api.mercadolibre.com/products/search?status=active&site_id=MLA&q=Samsung%20Galaxy%20S8
+    // fetch('https://api.mercadolibre.com/products/search?status=active&site_id=MLA+&q='+ISBM,{
+        // fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?site_id='+'MLA'+'&product_identifier='+'9789875665613'+'&limit=1',{
+////////////////////// apartado PARA INDAGAR mas sobre busquedas
 
 
 
@@ -147,3 +450,20 @@ formu.addEventListener('submit',function(e){
     })
 });
 // fetch('http://localhost:5000/assets/texto.txt').then(console.log(response));
+const modal= document.querySelector('.logo');
+function activa(){
+    var ancho = window.innerWidth;
+    if (modal.classList.contains('movelogo')){
+        modal.classList.remove('movelogo');
+        modal.style.left='0px';
+    }
+    else{
+        modal.classList.add('movelogo');
+        ancho=ancho-208;
+        modal.style.left=ancho+'px';
+    }
+    setTimeout(function(){
+        activa();
+    }, 3000);
+}
+activa();

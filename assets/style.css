@@ -145,9 +145,17 @@ p {
 .logo {
     /* float: left; */
     /* margin-top: 20px; */
-    display: inline-block;
+    display: flex;
     padding: 20px;
-    background-color: red;
+    transition: 3s;
+    position: absolute;
+    width: 208px;
+    /* left: 0px; */
+    background-color: #ffeb70;
+    /* background-color: red; */
+}
+.movelogo{
+
 }
 
 .btn {
@@ -223,7 +231,7 @@ code {
     background-color: #ffeb70;
     text-align: center;
     color: #333;
-    padding: 120px 0 40px;
+    padding: 40px 0 40px;
 }
 
 .header h1 {
