@@ -150,7 +150,7 @@ p {
     transition: 2s;
     position: fixed;
     width: 208px;
-    left: 20px;
+    left: 0px;
     background-color: #ffeb70;
     /* background-color: red; */
 }

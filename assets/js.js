@@ -41,7 +41,7 @@ function pidodatosdeservidor(){
             document.getElementById('info').innerHTML='no hay datos';
         }
         else if(Object.values(xdato)[0].indexOf('TG')!=-1){ // PROVISORIO REEMPLAZAR POR BUSCADOR DE KEYS WHIT GET o HASH DENTRO DE UN JSON QUE ABARQUE TODOS LOS DATOS
-            document.getElementById('info').innerHTML=Object.values(xdato)[0]+'<p>'+'existe TG dentro'+'</p>';
+            document.getElementById('info').innerHTML=Object.values(xdato)[0]+'<br>existe TG dentro';
             document.getElementById('pidekey').disabled = false;
             console.log('borra disabled');
             code=Object.values(xdato)[0];
@@ -156,11 +156,177 @@ function pedirRefreshToken(){
         pedirRefreshToken();
     }, 21000000);
 }
+//////////////////////////
+// const id='8513290730145598';
+// const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
+accesstoken='APP_USR-8513290730145598-061800-251737317eeb560216a3ef271aac36a4-244140036';
+refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
 
+// itempublicado='MLA860038719';
+// "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
 
+// var itempublicado='MLA750852053'; //libro ajeno
+var itempublicado='MLA926148119'; //item auxiliar
+function publicar1(){
+    fetch('https://api.mercadolibre.com/items',{
+        method:'POST',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        },
+        // https://api.mercadolibre.com/oauth/token:'https://api.mercadolibre.com/oauth/token',
+        body:JSON.stringify(
+            {
+                title:"ejercicio libro 4 Item de test - No Ofertar",
+                category_id:"MLA412445",
+                price:350,
+                currency_id:"ARS",
+                available_quantity:10,
+                buying_mode:"buy_it_now",
+                condition:"new",
+                listing_type_id:"gold_special",
+                description:{
+                    plain_text:"Descripción con Texto Plano "
+                },
+                video_id:"https://www.youtube.com/watch?v=uG4Sixk2srw&list=PL2Z95CSZ1N4HM7gzW8gK1Jt3lGWQO0k_G",
+                sale_terms:[
+                   {
+                    id:"WARRANTY_TYPE",
+                    value_name:"Garantía del vendedor"
+                   },
+                   {
+                    id:"WARRANTY_TIME",
+                    value_name:"90 días"
+                   }
+                ],
+                pictures:[
+                   {
+                    source:"http://mla-s2-p.mlstatic.com/968521-MLA20805195516_072016-O.jpg"
+                   }
+                ],
+                attributes:[
+                    {
+                        id: "AUTHOR",
+                        value_name: "String"
+                        },
+                        {
+                        id: "BOOK_TITLE",
+                        value_name: "String"
+                        },
+                        {
+                        id: "FORMAT",
+                        value_name: "Papel"
+                        },
+                        {
+                        id: "ISBN",
+                        value_name: "97895078830223" // SOLO ACEPTA NUMEROS PERO EN STRING
+                        },
+                        {
+                        id: "NARRATION_TYPE",
+                        value_name: "String"
+                        }                           
+                ]
+            }
+        )
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+function actualizar(){
+fetch('https://api.mercadolibre.com/items/'+itempublicado,{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+        method:'PUT',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+            'accept': 'application/json',
+            'content-type':'application/json'
+        },
+        body:JSON.stringify({
+            price: 900,
+            available_quantity:3,
+            sale_terms:[
+                {
+                 id:"WARRANTY_TYPE",
+                 value_name:"Garantía del vendedor"
+                },
+                {
+                 id:"WARRANTY_TIME",
+                 value_name:"90 días"
+                },
+                {
+                    id:"MANUFACTURING_TIME",
+                    value_name:"3 días"
+                }
+             ]
+            // MANUFACTURING_TIME:'3'
+            // hierarchy:3
+        })
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+function listar(){
+    // https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
+    // https://api.mercadolibre.com//items?ids=$ITEM_ID1,$ITEM_ID2&attributes=$ATTRIBUTE1,$ATTRIBUTE2,$ATTRIBUTE3
+    var seller_id=244140036 //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);///////////////////////////
+        // var lista=Object.keys(datos.result)
+        document.getElementById('titulopublicaciones').innerHTML='Publicaciones: '+datos.results.length;
+        document.getElementById('publicaciones').innerHTML='';
+        for(var i=0;i<datos.results.length;i++){
+            document.getElementById('publicaciones').innerHTML+=`
+            <div class="publicacion">
+            <div class="detail">
+            <p>titulo: <strong>${datos.results[i].title}</strong></p>
+            <p>precio: <strong>${datos.results[i].price}</strong></p>
+            <p>stock: <strong>${datos.results[i].available_quantity}</strong></p>
+            <p>foto: <strong>${datos.results[i].thumbnail}</strong></p>
+            </div>
+            <img src="${datos.results[i].thumbnail}" alt="no se encontro o hay mas de 1">
+            </div>
+            `;
+        }
+    });
+}
 
-
-
+function mostrar_1_producto(){//segun ML
+    fetch('https://api.mercadolibre.com/items/'+itempublicado,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+            'content-type':'application/x-www-form-urlencoded'
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+}
+//hierarchy
+function activar_stock_espera(){//segun ML
+    fetch('https://api.mercadolibre.com/categories/'+"MLA412445"+'/sale_terms',{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken,
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+    });
+//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+}
 
 
 
@@ -214,4 +380,4 @@ function activa(){
         activa();
     }, 3000);
 }
-activa();
+// activa();

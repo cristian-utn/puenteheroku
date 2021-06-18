@@ -23,9 +23,19 @@
         <button class="boton1" onclick="pidodatosdeservidor();">recupero_datos</button>
         <button class="boton1" onclick="vertodo();">ver todo</button>
     </div>
+    <div class="contenedor">
+        <button class="boton1" onclick="publicar1();">publicar 1</button>
+        <button class="boton1" onclick="actualizar();">actualiza precio</button>
+        <button class="boton1" onclick="listar();">lista detalle</button>
+        <button class="boton1" onclick="mostrar_1_producto();">mostrar item</button>
+        <button class="boton1" onclick="activar_stock_espera();">ok</button>
+    </div>
     <div class="contenedor"><p id="info"></p></div>
     <div class="contenedor"><p id="infotodo"></p></div>
     <div class="contenedor"><p id="infonuevotoken"></p></div>
+    <h1 id="titulopublicaciones">Publicaciones: </h1>
+    <div class="contenedor" id="publicaciones">
+    </div>
     <form id="fo" action="/recibo" method="GET">
         <input type="text" id="campo1" name="te" placeholder="pon tu nombre">
         <input type="text" id="campo1" name="tilaro" placeholder="pon tu nombre">
