@@ -159,7 +159,7 @@ function pedirRefreshToken(){
 //////////////////////////
 // const id='8513290730145598';
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
-accesstoken='APP_USR-8513290730145598-061812-228f79214d5d783304655fc6e9f81501-244140036';
+accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
 refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
 
 // itempublicado='MLA860038719';
@@ -278,6 +278,8 @@ function buscaycambia(){
     // fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?site_id=MLA'+'&q=9789875665613',{
     var largo;
     var encontrado;
+    var listaids=[];//ahora comparar cuando los tenga
+    var listadetalles=[];
     fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
         method:'GET',
         headers:{
@@ -286,55 +288,14 @@ function buscaycambia(){
     })
     .then( response=>response.json())
     .then( datos => {
-        console.log(datos.results);///////////////////////////
+        // console.log(datos.results);///////////////////////////
         largo=datos.results;
         // var lista=Object.keys(datos.result)
         document.getElementById('titulopublicaciones').innerHTML='Publicaciones: '+largo.length;
         document.getElementById('publicaciones').innerHTML='';
         for(var i=0;i<largo.length;i++){
-            console.log('reviso item: '+i);
-            fetch('https://api.mercadolibre.com/items/'+largo[i].id,{
-                method:'GET',
-                headers:{
-                    'Authorization': 'Bearer '+accesstoken,
-                    'content-type':'application/x-www-form-urlencoded'
-                }
-            })
-            .then( response=>response.json())
-            .then( dato => {
-                var larg=dato.attributes;
-                for(var j=0;j<larg.length;j++){
-                    // console.log(larg[j]);
-                    var permito=false;
-                    if('id' in larg[j]){
-                        if('GTIN' == larg[j].id)
-                        if('value_name' in larg[j] && larg[j].value_name == ISBM)
-                        encontrado=largo[i].id;
-                        permito=true;
-
-                    }
-                    else if('ISBM' in larg[j])
-                    if('value_name' in larg[j] && larg[j].value_name == ISBM)
-                        encontrado=largo[i].id;
-                        permito=true;        
-                    if(permito){
-                        console.log('DESCUBIERTO');
-                        console.log(encontrado)
-                        fetch('https://api.mercadolibre.com/items/'+encontrado,{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
-                            method:'PUT',
-                            headers:{
-                                'Authorization': 'Bearer '+accesstoken,
-                                'accept': 'application/json',
-                                'content-type':'application/json'
-                            },
-                            body:JSON.stringify({
-                                price: nuevoprecio,
-                                available_quantity:nuevostock//  SE PUEDE AGREGAR CAMBIO LAPSO DE DIAS QUE TARDARA
-                            })
-                        });
-                    }
-                }
-            });
+            // console.log('reviso item: '+i);
+            listaids.push(largo[i].id);
             document.getElementById('publicaciones').innerHTML+=`
             <div class="publicacion">
             <div class="detail">
@@ -348,9 +309,63 @@ function buscaycambia(){
             </div>
             `;
         }
+    })
+    .then(dato=>{
+        // console.log(listaids); // lista de ids
+        console.log(listaids.length);
+        for(var i=0;i<listaids.length;i++){
+            fetch('https://api.mercadolibre.com/items/'+listaids[i],{
+                method:'GET',
+                headers:{
+                    'Authorization': 'Bearer '+accesstoken,
+                    'content-type':'application/x-www-form-urlencoded'
+                }
+            })
+            .then( response=>response.json())
+            .then( datos => {
+                console.log(datos)
+            });
+
+
+            fetch('https://api.mercadolibre.com/items/'+itempublicado,{
+                method:'GET',
+                headers:{
+                    'Authorization': 'Bearer '+accesstoken,
+                    'content-type':'application/x-www-form-urlencoded'
+                }
+            })
+            .then( response=>response.json())
+            .then( datos => {
+                console.log(datos);
+            });
+        }
+        
+    }).then(dato2=>{
+        // console.log(dato2);
+        for(var j=0;j<listaids.length;j++){
+            console.log(listaids[j]);
+            console.log(listadetalles[j]);
+        }
     });
+        //     console.log(listatributos[i]);
+        //     for(var j=0;j<listatributos[i].length;j++){
+        //         console.log(listatributos[i][j]);
+        //     }
+        //     // }
+                // if('id' in larg[j]){
+                //     if('GTIN' == larg[j].id)
+                //     if('value_name' in larg[j] && larg[j].value_name == ISBM)
+                //     encontrado=largo[i].id;
+                //     permito=true;
+                //     // break;
+                // }
+                // else if('ISBM' in larg[j])
+                // if('value_name' in larg[j] && larg[j].value_name == ISBM){
+                //     encontrado=largo[i].id;
+                //     permito=true;
+                //     // break;
 }
-function listar(){
+function listar(){ //////////////////////////////////////////////////"    9789507880223    "
     // https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
     // https://api.mercadolibre.com//items?ids=$ITEM_ID1,$ITEM_ID2&attributes=$ATTRIBUTE1,$ATTRIBUTE2,$ATTRIBUTE3
     var seller_id=244140036 //lo saque de una publicacion
