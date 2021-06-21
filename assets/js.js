@@ -7,6 +7,7 @@ var localhost='http://localhost:5000'
 var hosting='https://node-predeterminado-ml.herokuapp.com';
 var direccion1='http://auth.mercadolibre.com.ar/authorization?response_type=code&client_id='+id+'&redirect_uri='+hosting;
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
+const key_secreto='77FPBqX5iLYTYe9TZYvrEhzpY9prc4rl';
 var code='';
 var accesstoken='';
 var refreshtoken='';
@@ -160,8 +161,9 @@ function pedirRefreshToken(){
 //////////////////////////
 // const id='8513290730145598';
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
-accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
-refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
+
+// accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
+// refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
 
 // itempublicado='MLA860038719';
 // "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
