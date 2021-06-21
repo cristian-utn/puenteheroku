@@ -1,7 +1,7 @@
 // const { response } = require("express");
 var fecha = new Date();
 
-const id='8513290730145598';
+const id='750763083';
 var localhost='http://localhost:5000'
 var hosting='https://node-predeterminado-ml.herokuapp.com';
 var direccion1='http://auth.mercadolibre.com.ar/authorization?response_type=code&client_id='+id+'&redirect_uri='+hosting;
@@ -487,3 +487,77 @@ function activa(){
     }, 3000);
 }
 activa();
+
+
+function sleep(milliseconds) {
+var start = new Date().getTime();
+for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds) {
+    break;
+    }
+}
+}
+
+function demo() {
+    console.log('Taking a break...');
+    sleep(200);
+    console.log('Two second later');
+}
+
+var datoexcel=[];
+function pedirexcel(){
+    document.getElementById('publicaciones').innerHTML='';
+    fetch('excel')
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+        modificar(datos);
+        console.log(datoexcel.length);
+        for(var i=0;i<100;i++){
+            document.getElementById('publicaciones').innerHTML+=`
+            <div class="publicacion">
+            <div class="detail">
+            <p>ISBM: <strong>${datoexcel[i].ISBM}</strong></p>
+            <p>Titulo: <strong>${datoexcel[i].Titulo}</strong></p>
+            <p>Autor: <strong>${datoexcel[i].Autor}</strong></p>
+            <p>Editorial: <strong>${datoexcel[i].Editorial}</strong></p>
+            <p>Tema: <strong>${datoexcel[i].Tema}</strong></p>
+            <p>Stock: <strong>${datoexcel[i].Stock}</strong></p>
+            <p>PVP: <strong>${datoexcel[i].PVP}</strong></p>
+            <p>TituloP: <strong>${datoexcel[i].TituloP}</strong></p>
+            <p>Portada: <strong>${datoexcel[i].Portada}</strong></p>
+            </div>
+            <img src="${datoexcel[i].Portada}" alt="no se encontro o hay mas de 1">
+            </div>
+            `;
+            // demo();
+            
+            // console.log(datoexcel[i].ISBM);
+        }
+        return datos;
+    }).then(a=>{
+        // modificar(a);
+    })
+}
+function modificar(entra){
+    datoexcel=entra;
+}
+function variable(datoexcel){
+    console.log('ten dato');
+    console.log(datoexcel);
+}
+{/* <div class="publicacion">
+<div class="detail">
+<p>ISBM: <strong>${datoexcel[i].ISBM}</strong></p>
+<p>Titulo: <strong>${datoexcel[i].Titulo}</strong></p>
+<p>Autor: <strong>${datoexcel[i].Autor}</strong></p>
+<p>Editorial: <strong>${datoexcel[i].Editorial}</strong></p>
+<p>Tema: <strong>${datoexcel[i].Tema}</strong></p>
+<p>Stock: <strong>${datoexcel[i].Stock}</strong></p>
+<p>PVP: <strong>${datoexcel[i].PVP}</strong></p>
+<p>TituloP: <strong>${datoexcel[i].TituloP}</strong></p>
+<p>Portada: <strong>${datoexcel[i].Portada}</strong></p>
+</div>
+<img src="${datoexcel[i].Portada}" alt="no se encontro o hay mas de 1">
+</div>
+`; */}

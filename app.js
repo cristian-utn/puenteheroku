@@ -1,4 +1,5 @@
 var express = require('express');
+var XLSX = require('xlsx');
 var app = express();
 var config = require("./config.js").config;
 var gets = require('./tests/testget.js');
@@ -30,6 +31,7 @@ var code_que_reciba_si_lo_tiene_la_url_de_mi_pagina={};
 var access_token_que_reciba_por_fetch={};
 var refresh_token_que_reciba_por_fetch={};
 var todainfo={};
+var exce;
 app.get('/envio/:x', function (req, res) {
     console.log(req.url);
     variable_recordada=req.url;
@@ -61,8 +63,42 @@ app.get('/info', function (req, res) {
 app.get('/assets/texto.txt', function (req, res) {
     res.sendFile(path.join(__dirname, 'assets/texto.txt'));
 });
+app.get('/excel', function (req, res) {
+    res.send(exce);
+});
 app.use(express.static(__dirname + '/assets'));
 
 app.listen(process.env.PORT || 5000, function () {
-    console.log('Example app listening on port 5000!');
+    console.log('Example app listening on port 5000!');1
 });
+
+// var archi=new FileReader();
+// archi.readAsText(__dirname, 'assets/Stocks-09-06-2021.xlsx')
+// console.log(archi.result);
+const exelajson = () =>{
+    const excel=XLSX.readFile('assets/Stocks - Librerías 09-06-2021.xlsx',{CellDates: true});
+    var nombrehoja=excel.SheetNames;
+    var datos=XLSX.utils.sheet_to_json(excel.Sheets[nombrehoja[0]]);
+    console.log(datos);
+    exce=datos;
+}
+exelajson();
+
+
+// const exelajson = () =>{
+//     const excel=XLSX.readFile('assets/Stocks-09-06-2021.xlsx');
+//     var nombrehoja=excel.SheetNames;
+//     let datos=XLSX.utils.sheet_to_json(excel.Sheets[nombrehoja[0]],{cellDates: true});
+//     console.log(datos);
+// }
+// exelajson();
+
+// en excel
+// 35142    con marco arriba
+// 32889    sin marco arriba
+
+// en consola de navegador
+// aparece 35241 elementos
+
+// en consola de servidor local
+// 35142 items mas
