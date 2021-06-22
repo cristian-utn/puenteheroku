@@ -5,6 +5,7 @@ var config = require("./config.js").config;
 var gets = require('./tests/testget.js');
 const https = require('https');
 const path=require('path');
+const fetch=require('node-fetch');
 // var id='8513290730145598';
 // var id='3831000572264914';
 var id='3831000572264914';
@@ -34,6 +35,28 @@ var access_token_que_reciba_por_fetch={};
 var refresh_token_que_reciba_por_fetch={};
 var todainfo={};
 var exce;
+var accesstoken='APP_USR-3831000572264914-062122-d997f4093008e0beecb3b608baecfd45-137472805';
+function listar(accesstoken){ //////////////////////////////////////////////////"    9789507880223    "
+    // https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
+    // https://api.mercadolibre.com//items?ids=$ITEM_ID1,$ITEM_ID2&attributes=$ATTRIBUTE1,$ATTRIBUTE2,$ATTRIBUTE3
+    // var seller_id=244140036; //lo saque de una publicacion
+    var seller_id='137472805'; //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    var link='https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id;
+    fetch(link,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then(response=>response.json())
+    .then(datos=>{
+        // var algo=datos.results;
+        // console.log(algo.length);
+        console.log(datos);
+    });
+}
+listar(accesstoken);
 app.get('/envio/:x', function (req, res) {
     console.log(req.url);
     variable_recordada=req.url;
@@ -77,6 +100,11 @@ app.listen(process.env.PORT || 5000, function () {
 // var archi=new FileReader();
 // archi.readAsText(__dirname, 'assets/Stocks-09-06-2021.xlsx')
 // console.log(archi.result);
+const fs=require('fs');
+var listajson=fs.readFileSync('assets/texto.json');
+console.log('algo IMPORTANTE');
+var au=JSON.parse(listajson);
+console.log(au);
 const exelajson = () =>{
     const excel=XLSX.readFile('assets/Stocks - Librerías 09-06-2021.xlsx',{CellDates: true});
     var nombrehoja=excel.SheetNames;
@@ -84,8 +112,13 @@ const exelajson = () =>{
     console.log(datos);
     exce=datos;
 }
-exelajson();
+// exelajson();
+au.push('algo');
+au.push('mas');
+console.log(au);
 
+fs.writeFileSync('assets/texto.json',JSON.stringify(au),'utf-8');
+console.log('algo IMPORTANTE');
 
 // const exelajson = () =>{
 //     const excel=XLSX.readFile('assets/Stocks-09-06-2021.xlsx');

@@ -163,7 +163,9 @@ function pedirRefreshToken(){
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
 
 // accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
+accesstoken='APP_USR-3831000572264914-062217-2d0c2ac696d1ed4b81eac84711b7ec1b-137472805';
 // refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
+refreshtoken='TG-60d218d4122d33000728971b-137472805';
 
 // itempublicado='MLA860038719';
 // "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
@@ -376,7 +378,8 @@ function buscaycambia(){
 function listar(){ //////////////////////////////////////////////////"    9789507880223    "
     // https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
     // https://api.mercadolibre.com//items?ids=$ITEM_ID1,$ITEM_ID2&attributes=$ATTRIBUTE1,$ATTRIBUTE2,$ATTRIBUTE3
-    var seller_id=244140036 //lo saque de una publicacion
+    // var seller_id=244140036; //lo saque de una publicacion
+    var seller_id=137472805; //lo saque de una publicacion
     var pais_mercadolibre='MLA';
     fetch('https://api.mercadolibre.com/sites/'+pais_mercadolibre+'/search?seller_id='+seller_id,{
         method:'GET',
@@ -549,18 +552,39 @@ function variable(datoexcel){
     console.log('ten dato');
     console.log(datoexcel);
 }
-{/* <div class="publicacion">
-<div class="detail">
-<p>ISBM: <strong>${datoexcel[i].ISBM}</strong></p>
-<p>Titulo: <strong>${datoexcel[i].Titulo}</strong></p>
-<p>Autor: <strong>${datoexcel[i].Autor}</strong></p>
-<p>Editorial: <strong>${datoexcel[i].Editorial}</strong></p>
-<p>Tema: <strong>${datoexcel[i].Tema}</strong></p>
-<p>Stock: <strong>${datoexcel[i].Stock}</strong></p>
-<p>PVP: <strong>${datoexcel[i].PVP}</strong></p>
-<p>TituloP: <strong>${datoexcel[i].TituloP}</strong></p>
-<p>Portada: <strong>${datoexcel[i].Portada}</strong></p>
-</div>
-<img src="${datoexcel[i].Portada}" alt="no se encontro o hay mas de 1">
-</div>
-`; */}
+var itemID;
+var scroll="YXBpY29yZS1pdGVtcy1zZWFyY2g=:ZHMtYXBpY29yZS1pdGVtcy0wNQ==:FGluY2x1ZGVfY29udGV4dF91dWlkDXF1ZXJ5QW5kRmV0Y2gBFGFUN3ROSG9CUUZ4ZGp1YmVUS2NVAAAAAA2Rk1IWUi1RTm1CdTdUaGV3MTF1SUg0elB1QQ==";
+// 21562 PUBLICADOS EN MERCADO LIBRE
+var scroll="";
+function listatotal(){
+    var seller_id=137472805; //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=1000',{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);///////////////////////////
+        itemID=datos.scroll_id;
+        // publicaciones.innerHTML=itemID;
+    });
+}
+
+function listatotal2(){
+    var seller_id=137472805; //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    // fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=1000',{
+    fetch('https://api.mercadolibre.com/questions/search?search_type=scan&limit=100&item='+itemID,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);///////////////////////////
+    });
+}
