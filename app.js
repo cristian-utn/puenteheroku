@@ -56,7 +56,7 @@ function listar(accesstoken){ //////////////////////////////////////////////////
         console.log(datos);
     });
 }
-listar(accesstoken);
+// listar(accesstoken);
 app.get('/envio/:x', function (req, res) {
     console.log(req.url);
     variable_recordada=req.url;
@@ -101,10 +101,10 @@ app.listen(process.env.PORT || 5000, function () {
 // archi.readAsText(__dirname, 'assets/Stocks-09-06-2021.xlsx')
 // console.log(archi.result);
 const fs=require('fs');
-var listajson=fs.readFileSync('assets/texto.json');
+// var listajson=fs.readFileSync('assets/texto.json');
 console.log('algo IMPORTANTE');
-var au=JSON.parse(listajson);
-console.log(au);
+// var au=JSON.parse(listajson);
+// console.log(au);
 const exelajson = () =>{
     const excel=XLSX.readFile('assets/Stocks - Librerías 09-06-2021.xlsx',{CellDates: true});
     var nombrehoja=excel.SheetNames;
@@ -113,11 +113,11 @@ const exelajson = () =>{
     exce=datos;
 }
 // exelajson();
-au.push('algo');
-au.push('mas');
-console.log(au);
+// au.push('algo');
+// au.push('mas');
+// console.log(au);
 
-fs.writeFileSync('assets/texto.json',JSON.stringify(au),'utf-8');
+// fs.writeFileSync('assets/texto.json',JSON.stringify(au),'utf-8');
 console.log('algo IMPORTANTE');
 
 // const exelajson = () =>{
