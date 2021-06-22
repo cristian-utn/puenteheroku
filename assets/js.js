@@ -588,3 +588,4 @@ function listatotal2(){
         console.log(datos);///////////////////////////
     });
 }
+function mostra(){console.log(itemID)}
