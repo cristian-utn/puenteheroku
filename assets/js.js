@@ -577,7 +577,7 @@ function listatotal2(){
     var seller_id=137472805; //lo saque de una publicacion
     var pais_mercadolibre='MLA';
     // fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=1000',{
-    fetch('https://api.mercadolibre.com/questions/search?search_type=scan&limit=100&item='+itemID,{
+    fetch('https://api.mercadolibre.com/questions/search?search_type=scan&item='+itemID,{
         method:'GET',
         headers:{
             'Authorization': 'Bearer '+accesstoken
