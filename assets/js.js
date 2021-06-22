@@ -163,9 +163,9 @@ function pedirRefreshToken(){
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
 
 // accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
-accesstoken='APP_USR-3831000572264914-062217-2d0c2ac696d1ed4b81eac84711b7ec1b-137472805';
+accesstoken='APP_USR-3831000572264914-062219-94764f230ddb0f0e250039b7e245950f-137472805';
 // refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
-refreshtoken='TG-60d218d4122d33000728971b-137472805';
+refreshtoken='TG-60d2340f27243300070263ff-137472805';
 
 // itempublicado='MLA860038719';
 // "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
@@ -559,7 +559,8 @@ var scroll="";
 function listatotal(){
     var seller_id=137472805; //lo saque de una publicacion
     var pais_mercadolibre='MLA';
-    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=1000',{
+    // fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=100',{
+    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan',{
         method:'GET',
         headers:{
             'Authorization': 'Bearer '+accesstoken
@@ -576,8 +577,8 @@ function listatotal(){
 function listatotal2(){
     var seller_id=137472805; //lo saque de una publicacion
     var pais_mercadolibre='MLA';
-    // fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&limit=1000',{
-    fetch('https://api.mercadolibre.com/questions/search?search_type=scan&item='+itemID,{
+    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&croll_id='+itemID,{
+    // fetch('https://api.mercadolibre.com/questions/search?search_type=scan&item='+itemID,{
         method:'GET',
         headers:{
             'Authorization': 'Bearer '+accesstoken
@@ -586,6 +587,7 @@ function listatotal2(){
     .then( response=>response.json())
     .then( datos => {
         console.log(datos);///////////////////////////
+        itemID=datos.scroll_id;
     });
 }
 function mostra(){console.log(itemID)}
