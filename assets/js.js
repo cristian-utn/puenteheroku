@@ -577,8 +577,24 @@ function listatotal(){
 function listatotal2(){
     var seller_id=137472805; //lo saque de una publicacion
     var pais_mercadolibre='MLA';
-    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&croll_id='+itemID,{
     // fetch('https://api.mercadolibre.com/questions/search?search_type=scan&item='+itemID,{
+    fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&croll_id='+itemID,{
+        method:'GET',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);///////////////////////////
+        itemID=datos.scroll_id;
+    });
+}
+function listatotal3(){
+    var seller_id=137472805; //lo saque de una publicacion
+    var pais_mercadolibre='MLA';
+    // fetch('https://api.mercadolibre.com/users/'+seller_id+'/items/search?search_type=scan&croll_id='+itemID,{
+        fetch('https://api.mercadolibre.com/questions/search?search_type=scan&item='+itemID,{
         method:'GET',
         headers:{
             'Authorization': 'Bearer '+accesstoken
