@@ -163,9 +163,9 @@ function pedirRefreshToken(){
 // const key_secreto='MXZwKgLJCq8EBHCbbiuV0yPP32Q2CoWu';
 
 // accesstoken='APP_USR-8513290730145598-061818-e0e082a1235a079fb5c4c8303c6773ae-244140036';
-accesstoken='APP_USR-3831000572264914-062513-95f7b0725660a47996f27eb1a73d0097-137472805';
+accesstoken='APP_USR-3831000572264914-062514-cbca2e0b64f0c52834545522ab19a724-137472805';
 // refreshtoken='TG-60cbe39be584b80008f478ec-244140036';
-refreshtoken='TG-60d3b82c531f2b000846bc61-137472805';
+refreshtoken='TG-60d5e4981e2b780007763941-137472805';
 
 // itempublicado='MLA860038719';
 // "MLA412445"      categoria   Libros, Revistas y ComicsLibrosAutoayudaSuperación personal
@@ -415,7 +415,7 @@ function mostrar_1_producto(){//segun ML
     // itempublicado='MLA865389265'; // desconocido
     // itempublicado='MLA775832082'; // desconocido
     // itempublicado='MLA926112518'; // desconocido
-    itempublicado='MLA926760346'; // desconocido
+    itempublicado='MLA865023025'; // desconocido
 
     fetch('https://api.mercadolibre.com/items/'+itempublicado,{
         method:'GET',
@@ -954,28 +954,48 @@ function muestra3datos(){
 function waldsinflex(){
     var contnull=0;
     console.log(listaskuwald.length); // 15596
-
-    fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
-        method:'DELETE',
+    console.log('CAMBIADO'); // 15596
+    // fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+    fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+'MLA865023025',{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+        method:'POST',
         headers:{
-            'Authorization': 'Bearer '+accesstoken,
+            'Authorization': 'Bearer '+accesstoken
         }
     })
     .then( response=>response.json())
     .then( datos => {
         console.log(datos);
         contaglobal++;
-        console.log(contaglobal);
-        repitesku();
+        // console.log(contaglobal);
+        // repitesku();
     });
-
+    console.log(contnull);
+}
+function waldsinflex2(){
+    var contnull=0;
+    console.log(listaskuwald.length); // 15596
+    console.log('CAMBIADO'); // 15596
+    // fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+    fetch('https://api.mercadolibre.com/sites/MLB/shipping/selfservice/items/'+'MLA865023025',{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+        method:'POST',
+        headers:{
+            'Authorization': 'Bearer '+accesstoken
+        }
+    })
+    .then( response=>response.json())
+    .then( datos => {
+        console.log(datos);
+        contaglobal++;
+        // console.log(contaglobal);
+        // repitesku();
+    });
     console.log(contnull);
 }
 function repitesku(){
     fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
     method:'DELETE',
     headers:{
-        'Authorization': 'Bearer '+accesstoken,
+        'Authorization': 'Bearer '+accesstoken
     }
     })
     .then( response=>response.json())
