@@ -976,7 +976,7 @@ function waldsinflex2(){
     console.log(listaskuwald.length); // 15596
     console.log('CAMBIADO'); // 15596
     // fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
-    fetch('https://api.mercadolibre.com/sites/MLB/shipping/selfservice/items/'+'MLA865023025',{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
+    fetch('https://api.mercadolibre.com/sites/MLB/shipping/selfservice/items/'+'MLA-865023025',{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
         method:'POST',
         headers:{
             'Authorization': 'Bearer '+accesstoken
