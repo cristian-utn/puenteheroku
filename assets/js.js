@@ -957,7 +957,7 @@ function waldsinflex(){
     console.log('CAMBIADO'); // 15596
     // fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+listaskuwald[contaglobal],{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
     fetch('https://api.mercadolibre.com/sites/MLA/shipping/selfservice/items/'+'MLA865023025',{//    https://developers.mercadolibre.com.ar/es_ar/producto-sincroniza-modifica-publicaciones
-        method:'POST',
+        method:'DELETE',
         headers:{
             'Authorization': 'Bearer '+accesstoken
         }
